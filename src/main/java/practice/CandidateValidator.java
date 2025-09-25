@@ -6,6 +6,7 @@ import model.Candidate;
 
 public class CandidateValidator implements Predicate<Candidate> {
     public static final int YEARS_OF_RESIDENCE = 10;
+
     @Override
     public boolean test(Candidate c) {
         if (c.getAge() < 35) {
