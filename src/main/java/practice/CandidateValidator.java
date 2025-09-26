@@ -6,16 +6,18 @@ import model.Candidate;
 
 public class CandidateValidator implements Predicate<Candidate> {
     public static final int YEARS_OF_RESIDENCE = 10;
+    public static final int MINIMUM_AGE = 35;
+    public static final String REQUIRED_NATIONALITY = "Ukrainian";
 
     @Override
     public boolean test(Candidate c) {
-        if (c.getAge() < 35) {
+        if (c.getAge() < MINIMUM_AGE) {
             return false;
         }
         if (!c.isAllowedToVote()) {
             return false;
         }
-        if (!"Ukrainian".equals(c.getNationality())) {
+        if (!REQUIRED_NATIONALITY.equals(c.getNationality())) {
             return false;
         }
         return hasMinimumResidence(c, YEARS_OF_RESIDENCE);
@@ -26,7 +28,8 @@ public class CandidateValidator implements Predicate<Candidate> {
                 .map(String::trim)
                 .mapToInt(range -> {
                     String[] years = range.split("-");
-                    return Integer.parseInt(years[1]) - Integer.parseInt(years[0]);
+                    return Integer.parseInt(years[1].trim())
+                            - Integer.parseInt(years[0].trim());
                 })
                 .sum() >= yearsOfResidence;
     }
